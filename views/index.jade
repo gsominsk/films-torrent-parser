@@ -1,0 +1,36 @@
+extends layout
+
+block content
+	.container
+		.row.body-row
+			.col-xs-12.offset-md-1.col-sm-12.col-md-10.offset-lg-1.col-lg-10
+				.search-header
+					.logo
+						img(src="images/1.png")
+					.search-input()
+						.search-input-wraper
+							input(type="text" placeholder="search" v-on:keyup="checkFilms")
+				.sorting-wrap
+					.by-year
+						| year
+						span
+					.by-rating
+						| rating
+						span
+					.by-views
+						| views
+						span
+				ul.list-of-films
+					li.film-item
+						.film-img-wrap
+							img(src="http://nerdist.com/wp-content/uploads/2016/08/Guardians-of-the-Galaxy-poster-2.jpg")
+						.film-text-wrap
+							.film-text-header
+								| Стражи Галактики
+							.film-text-body
+								.year
+									| Year :
+									span 2015
+								.ratings
+									img(src="images/imdb.ico")
+									span 8.1
