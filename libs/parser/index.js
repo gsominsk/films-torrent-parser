@@ -47,36 +47,42 @@ function parseYify (start, film, callback) {
 		promise
 			.then(
 				(result) => {
-					console.log('urls', result);
-
 					let qFilmItem = async.queue(function (url, callback) {
 						needle.get(url, (err, res) => {
 							let $ = cheerio.load(res.body);
 							let data = {
 								img		: $('.img-responsive')[0].attribs.src,
+								name 	: $('#mobile-movie-info')[0].children[1].children[0].data,
+								year	: $('#mobile-movie-info')[0].children[3].children[0].data,
+								genres	: $('#mobile-movie-info')[0].children[5].children[0].data,
+								time	: $('.tech-spec-info')[0].children[3].children[5].children[2].data,
 								magnets	: [],
 								synopsis: $('#synopsis')[0].children[3].children[0].data,
 								imdbUrl	: '',
+								cast	: [],
 								imdb	: ''
 							};
 
 							data.magnets.push($('.magnet-download')[0].attribs.href);
 							data.magnets.push($('.magnet-download')[1].attribs.href);
-							data.name = $('#mobile-movie-info')[0].children[1].children[0].data;
+
+							for (let i = 0; i < $('.list-cast').length; i++) {
+								data.cast.push({
+									img	: $('.list-cast')[i].children[1].children[1].children[1].attribs.src,
+									name: $('.list-cast')[i].children[3].children[1].children[0].data
+								});
+							}
 
 							for (let i = 0; i < $('.rating-row').length && $('.rating-row')[i].children[1]; i++) {
 								if ($('.rating-row')[i].children[1].attribs.title == "IMDb Rating") {
-									data.imdbUrl = $('.rating-row')[i].children[1].attribs.href;
+									data.imdbUrl 	= $('.rating-row')[i].children[1].attribs.href;
+									data.imdb 		= $('.rating-row')[i].children[3].children[0].data;
 									break ;
 								}
 							}
 
-							needle.get(data.imdbUrl, (err, res) => {
-								let $ = cheerio.load(res.body);
-								data.imdb = $('.ratingValue')[0].children[1].children[0].children[0].data;
-								films.push(data);
-								callback();
-							});
+							films.push(data);
+							callback();
 						});
 					}, 40);
 
