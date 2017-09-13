@@ -3,6 +3,10 @@ html, body, .wrap, .container {
 	//height: 100%;
 	box-sizing: border-box;
 }
+.container {
+	max-width: 720px;
+	margin: 0 auto;
+}
 
 .no-indent {
 	margin: 0;

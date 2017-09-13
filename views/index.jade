@@ -9,7 +9,7 @@ block content
 						img(src="images/1.png")
 					.search-input()
 						.search-input-wraper
-							input(type="text" placeholder="search" v-on:keyup="checkFilms")
+							input(type="text" placeholder="search" v-on:keyup.enter="checkFilms")
 				.sorting-wrap
 					.by-year
 						| year
