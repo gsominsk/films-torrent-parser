@@ -22,8 +22,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({secret: 'keyboard cat', cookie: { maxAge: 100000 }}));
-// app.use(express.session());
+app.use(session({
+	secret: 'keyboard cat',
+	proxy: true,
+	resave: true,
+	saveUninitialized: true,
+	cookie: {
+		maxAge: 100000
+	}
+}));
 
 app.use('/', index);
 app.use('/users', users);
