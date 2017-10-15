@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	| Hello
+	script.
+		$.ready = function () {
+			var data = '{"name": "Anomalous", "magnets": ["magnet:?xt=urn:btih:7470D550C014B1E0F1526EAE09697F8CFCEC67A6&dn=Anomalous+%282016%29+%5B720p%5D+%5BYTS.AG%5D&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337", "magnet:?xt=urn:btih:D9596707704FC21AA41C105EC5C64A9FD486080E&dn=Anomalous+%282016%29+%5B1080p%5D+%5BYTS.AG%5D&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337"]}'
+
+			var downloadFilm = function (movie) {
+				let json = JSON.parse(movie)
+				let name = json.name
+				let magnets = json.magnets
+
+				$.ajax({
+					type: "POST",
+					url: "/download",
+					data: JSON.stringify({magnet: magnets[0]}),
+					dataType: "json",
+					contentType: "application/json",
+					success: console.log(magnets[0] + ' pushed to the Downloader')
+				});
+
+			}
+			downloadFilm(data);
+		}

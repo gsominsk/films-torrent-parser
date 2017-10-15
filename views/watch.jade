@@ -1,0 +1,33 @@
+html
+	head
+		meta(http-equiv='cache-control', content='no-cache')
+		meta(http-equiv='expires', content='0')
+		meta(http-equiv='pragma', content='no-cache')
+		style.
+			.controls button[data-state="subtitles"] {
+				height:85%;
+				text-indent:0;
+				font-size:16px;
+				font-size:1rem;
+				font-weight:bold;
+				color:#666;
+				background:#000;
+				border-radius:2px;
+			}
+		link(href='//vjs.zencdn.net/4.12/video-js.css', rel='stylesheet')
+		script(src='//vjs.zencdn.net/4.12/video.js')
+		link(href='video-quality-selector.css', rel='stylesheet', type='text/css')
+		script(src='video-quality-selector.js')
+		script(src='//cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.10.1/videojs-contrib-hls.min.js')
+	body
+		video#my-player.video-js.vjs-default-skin(controls='', width='1280', height='720', data-setup='{ "plugins" : { "resolutionSelector" : { "default_res" : "720" } } }')
+			source(src='videos/Anomalous.2016.720p.BluRay.x264-[YTS.AG].mp4', type='video/mp4', data-res='720')
+			source(src='videos/jellyfish-3-mbps-hd-h264.mkv', type='video/mp4', data-res='1080')
+			track(label='English', kind='subtitles', srclang='en', src='captions/The.Mummy.2017.1080p.BluRay.x264-GECKOS.EtHD.eng.vtt', default='')
+			track(label='Français', kind='subtitles', srclang='fr', src='captions/The.Mummy.2017.1080p.WEB-DL.6CH.MkvCage.vtt')
+			track(label='Русский', kind='subtitles', srclang='ru', src='captions/The.Mummy.2017.1080p.WEB-DL.DD5.1.H264-FGT.vtt')
+			p.vjs-no-js
+				| To view this video please enable JavaScript, and consider upgrading to a
+				| web browser that
+				a(href='http://videojs.com/html5-video-support/', target='_blank')
+					| supports HTML5 video

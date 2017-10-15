@@ -1,0 +1,53 @@
+//      /search/<string:searchword>/<int:start>/<int:stop>
+//      /search/<int:start>/<int:stop>
+
+//      Примеры запросов:
+//      /search/kill/1/2
+//      /search/1/2
+
+//      Пример ответа:
+
+{
+  "search_results": [
+    {
+      "id": 2342,
+      "title": "Kill em all",
+      "year": 1986,
+      "rating": 9.5,
+      "photo_url": "/static/movies/movie1/movie_1.jpg",
+      "movie_url": [
+        "/static/movies/movie1/movie_1_720p.mp4",
+        "/static/movies/movie1/movie_1_1080p.mp4"
+      ],
+      "subtitles_url": [
+        "/static/movies/movie2/movie_1_en.vtt",
+        "/static/movies/movie2/movie_1_ru.vtt"
+      ],
+      "genre": "adventure, thriller",
+      "producer": "Barry Tailor",
+      "director": "Tobi Dilan",
+      "actors": "Robin Wiliams, Robin Good, Robin Bad",
+      "country": "Germany, USA"
+    },
+    {
+      "id": 94642,
+      "title": "Kill switch",
+      "year": 1999,
+      "rating": 7.3,
+      "photo_url": "/static/movies/movie1/movie_1.jpg",
+      "movie_url": [
+        "/static/movies/movie2/movie_2_720p.mp4",
+        "/static/movies/movie2/movie_2_1080p.mp4"
+      ],
+      "subtitles_url": [
+        "/static/movies/movie2/movie_2_en.vtt",
+        "/static/movies/movie2/movie_2_ru.vtt"
+      ],
+      "genre": "adventure, thriller",
+      "producer": "Barry Tailor",
+      "director": "Tobi Dilan",
+      "actors": "Robin Wiliams, Robin Good, Robin Bad",
+      "country": "Germany, USA"
+    }
+  ]
+}
