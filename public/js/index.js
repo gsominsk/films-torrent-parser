@@ -43,19 +43,26 @@ window.onload = function () {
 			methods: {
 				checkFilms: function () {
 					let film = this.$el.childNodes[0].value;
+					let start = 0;
+					let end = 21;
 					console.log(this.$el.childNodes[0].value);
 					let ajax 	= new Ajax;
 					let ajaxReq = {
-						type: "POST",
-						body: {
-							action	: 'findFilms',
-							film	: film
-						}
+						type: "GET"
 					};
-					ajax.sendRequest('/find', ajaxReq, (data) => {
-						if (data.err) return console.error(data.err);
-						console.log(data);
-					});
+					// ajax.sendRequest(`/search/harry/0/20`, ajaxReq, (data) => {
+					// 	if (data.err) return console.error(data.err);
+					// 	console.log(data);
+					// });
+
+                    ajax.sendRequest(`/search/0/20`, ajaxReq, (data) => {
+                        if (data.err) return console.error(data.err);
+                        console.log(data);
+                    });
+                    // ajax.sendRequest(`/watch/id/title/magnet720/magnet1080`, ajaxReq, (data) => {
+                     //    if (data.err) return console.error(data.err);
+                     //    console.log(data);
+                    // });
 				}
 			}
 		});

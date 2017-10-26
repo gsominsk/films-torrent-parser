@@ -25,7 +25,7 @@ class Parsers extends parserTools {
 	}
 
 	parseYifyWithoutApi (start, film, callback) {
-		let url 	= 'http://yify.is/movie/yifi_filter'+(start==0?'':'/'+start*20)+'?keyword='+encodeURI(film)+'&quality=all&genre=all&rating=0&order_by=latest';
+		let url 	= 'http://yify.is/movie/yifi_filter'+(start==0?'':'/'+start)+'?keyword='+encodeURI(film)+'&quality=all&genre=all&rating=0&order_by=latest';
 		let films 	= [];
 		let urls 	= [];
 
@@ -162,7 +162,7 @@ function parse (start, film, func, callback) {
 }
 
 
-module.exports = function (start, film, callback) {
+module.exports = function (start, film = '', callback) {
 	parse(start, film, 0, (films) => {
 		callback(JSON.stringify(films))
 	});
