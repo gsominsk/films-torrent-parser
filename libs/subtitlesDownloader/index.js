@@ -22,7 +22,7 @@ OpenSubtitles.login()
 		console.log(err);
 	});
 
-var searchAndDownloadSubtitles = function(imdb_id, out) {
+var searchAndDownloadSubtitles = function(imdb_id, out, callback) {
 	// var out = new Array();   // THAT IS MANDATORY PARAMETER FOR A FUNCTION
 	// var imdb_id = '1253863'; // THAT IS MANDATORY PARAMETER FOR A FUNCTION
 
@@ -40,7 +40,7 @@ var searchAndDownloadSubtitles = function(imdb_id, out) {
 		// console.log(subtitles);
 		// console.log("######### DOWNLOAD SUBTITLES #########");
 		downloadSubtitles(subtitles)
-			.then(function(arr) {
+			.then(function(out) {
 			// 	console.log("English Subtitles: " + sub[0]);
 			// 	console.log("Russian Subtitles: " + sub[1]);
 			//  console.log("subtitles downloaded successfully");
@@ -49,6 +49,7 @@ var searchAndDownloadSubtitles = function(imdb_id, out) {
 				out.push(arr[0] + '.vtt');
 				out.push(arr[1] + '.vtt');
 				// console.log(out);
+				callback(out);
 			});
 	});
 };
@@ -70,7 +71,7 @@ var downloadSubtitles = (subtitles) => {
 				// console.log(subArray);
 				// fs.remove(file); // remove .srt file
 				download([
-					subtitles.ru[0].url
+					subtitles.en[0].url
 				], path)
 					.on('close', (err, url, file) => {
 						if (err) throw new Error(err)
@@ -78,6 +79,7 @@ var downloadSubtitles = (subtitles) => {
 						subArray.push(file);
 						// console.log(subArray);
 						// fs.remove(file); // remove .srt file
+						// callback(subArray);
 						resolve(subArray); // final output
 					}).on('done', () => {
 					var srtData = fs.readFileSync(subArray[1]);
@@ -97,5 +99,5 @@ var downloadSubtitles = (subtitles) => {
 };
 
 module.exports = function (imdb_id, out) {
-	searchAndDownloadSubtitles(imdb_id, out)
+	searchAndDownloadSubtitles(imdb_id, out, callback)
 };

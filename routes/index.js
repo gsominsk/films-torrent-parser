@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var parser = require('./../libs/parser');
-var downloader = require('./../libs/downloader');
+var movieDownloader = require('./../libs/movieDownloader');
 var subtitlesDownloader = require('./../libs/subtitlesDownloader');
 var async = require('async');
 
@@ -16,19 +16,17 @@ router.get('/watch/:id/:title/:magnet720/:magnet1080', function(req, res, next) 
 		magnetHigh	: req.param('magnet1080')
     };
 
-    var arr = new Array();
-
-    subtitlesDownloader(upload.id, arr); // first argument is imdb_id, second - is empty array, which after running the
-    // function will return an array of [0] - en, [1] - ru subtitles path
-
-    setTimeout(myFunc, 1000);
+    //movie
 
     var magnets = new Array();  // input array, consists of magnet links
     var names   = new Array();  // array of file names
     var paths   = new Array();  // array consists of links to videos
 
+    // magnets.push(upload.magnetLow); // 720p
+    // magnets.push(upload.magnetHigh); // 1080p
+
     magnets.push(upload.magnetLow); // 720p
-    magnets.push(upload.magnetHigh); // 1080р
+    magnets.push(upload.magnetHigh); // 1080p
 
     names.push(upload.title + '720p.mp4');
     names.push(upload.title + '1080p.mp4');
@@ -38,18 +36,40 @@ router.get('/watch/:id/:title/:magnet720/:magnet1080', function(req, res, next) 
         paths.push('public/videos/' + names[i]);
     }
 
-    setTimeout(myFunc1, 500);
-
-	setTimeout(() => {
-        console.log(arr);
+    function myFunc() {
         console.log(paths); // output array: [0] is 720p video, [1] is 1080p video
-		console.log('Eto blyad yobanii kostyli ot Arturchika i tak delat ne nado. Eta poebota ne rabotaet.')
-		res.send({
+    }
+
+    setTimeout(myFunc, 500);
+
+    // sub
+
+    var arr = new Array();
+
+    subtitlesDownloader(upload.id, arr, (f) => {
+        console.log('aaaaa', f);
+    });
+    // first argument is imdb_id, second - is empty array, which after running the
+    // function will return an array of [0] - en, [1] - ru subtitles path
+
+    // function myFunc1() {
+    //     console.log(arr);
+    // }
+    //
+    // setTimeout(myFunc1, 1000);
+
+    setTimeout(() => {
+        res.send({
             movie_url: paths,
             subtitles_url: arr
         });
-	})
+    }, 2000);
+
+    // res.send(upload);
 });
+
+
+
 
 router.get('/search/:searchword/:start/:end', function(req, res, next) {
     var search = {
