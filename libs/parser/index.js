@@ -69,19 +69,18 @@ class Parsers extends parserTools {
                         director	: $('.directors').children('.list-cast').first().children('.list-cast-info').first().children('a').first().text(),
                         runtime		: $('.tech-spec-info').children('.row').last().children('.tech-spec-element').eq(2).text(),
                         magnets		: [],
-                        description	: $('#synopsis').children('p').eq(1).text(),
+                        magnt_720	: $('.magnet-download').eq(0)[0].attribs.href,
+                        magnt_1080	: $('.magnet-download').eq(1)[0].attribs.href,
+						description	: $('#synopsis').children('p').eq(1).text(),
                         actors		: []
 					};
 
-					data.magnets.push($('.magnet-download').eq(0)[0].attribs.href);
-					data.magnets.push($('.magnet-download').eq(1)[0].attribs.href);
-
-					// for (let i = 0; i < $('.list-cast').length; i++) {
-					// 	data.actors.push(
-					// 		' '+$('.list-cast').eq(i).find('.name-cast').text()
-					// 	);
-					// }
-					// data.actors = data.actors.join(',');
+					for (let i = 0; i < $('.list-cast').length; i++) {
+						data.actors.push(
+							' '+$('.list-cast').eq(i).find('.name-cast').text()
+						);
+					}
+					data.actors = data.actors.join(',');
 
 					for (let i = 0; i < $('.rating-row').length && $('.rating-row')[i].children[1]; i++) {
 						if ($('.rating-row')[i].children[1].attribs.title == "IMDb Rating") {
@@ -128,18 +127,21 @@ class Parsers extends parserTools {
 			needle.get(url, (err, res) => {
 				if (res.body.status == 'ok' && res.body.data.movie_count > 0)
 					for (var i = 0; i < res.body.data.movies.length; i++) {
-						let data = {
-							img		: res.body.data.movies[i].medium_cover_image,
-							name 	: res.body.data.movies[i].title,
-							year	: res.body.data.movies[i].year,
-							genres	: res.body.data.movies[i].genres.join(' '),
-							time	: '120',
-							magnets	: res.body.data.movies[i].torrents,
-							synopsis: res.body.data.movies[i].summary,
-							imdbUrl	: '',
-							cast	: [],
-							imdb	: res.body.data.movies[i].rating
-						};
+                        let data = {
+                            id			: '',
+                            title 		: res.body.data.movies[i].title,
+                            year		: res.body.data.movies[i].year,
+                            rating		: res.body.data.movies[i].rating,
+                            photo_url	: res.body.data.movies[i].medium_cover_image,
+                            genre		: res.body.data.movies[i].genres.join(' '),
+                            director	: '',
+                            runtime		: '120',
+                            magnt_720	: res.body.data.movies[i].torrents[0],
+                            magnt_1080	: res.body.data.movies[i].torrents[1],
+                            description	: res.body.data.movies[i].summary,
+                            actors		: []
+                        };
+
 						films.push(data);
 					}
 				return (films.length == 0 && ++api < 2 ? recursiveApiSearch(api, film) : callback(films));

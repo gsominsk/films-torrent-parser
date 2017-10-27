@@ -51,12 +51,13 @@ router.get('/watch/:id/:title/:magnet720/:magnet1080', function(req, res, next) 
 	})
 });
 
-router.get('/search/:start/:end', function(req, res, next) {
+router.get('/search/:searchword/:start/:end', function(req, res, next) {
     var search = {
+        word        : req.param('searchword') == 'null' ? '' : req.param('searchword'),
         start		: req.param('start'),
         end 		: req.param('end')
     };
-    parser(search.start, '', (data) => {
+    parser(search.start, search.word, (data) => {
         res.send({err:null, res: data});
     });
 });

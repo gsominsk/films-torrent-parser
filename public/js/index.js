@@ -55,7 +55,7 @@ window.onload = function () {
 					// 	console.log(data);
 					// });
 
-                    ajax.sendRequest(`/search/0/20`, ajaxReq, (data) => {
+                    ajax.sendRequest(`/search/harry/0/20`, ajaxReq, (data) => {
                         if (data.err) return console.error(data.err);
                         console.log(data);
                     });
