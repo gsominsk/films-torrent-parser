@@ -56,8 +56,7 @@ class Parsers extends parserTools {
 				(result) => {
 			let qFilmItem = async.queue(function (url, callback) {
 				needle.get(url, (err, res) => {
-					if (url === 'http://yify.is/movie/view') return callback() ;
-					// console.log(res.body);
+					if (url === 'http://yify.is/movie/view' || res.body == void(0)) return callback([]) ;
 					let $ = cheerio.load(res.body);
 
 					let data = {
