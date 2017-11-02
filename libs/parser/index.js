@@ -25,7 +25,7 @@ class Parsers extends parserTools {
 	}
 
 	parseYifyWithoutApi (start, film, callback) {
-		let url 	= 'http://yify.is/movie/yifi_filter'+(start==0?'':'/'+start)+'?keyword='+encodeURI(film)+'&quality=all&genre=all&rating=0&order_by=latest';
+		let url 	= 'http://yify.is/movie/yifi_filter'+(start==0?'':'/'+start * 20)+'?keyword='+encodeURI(film)+'&quality=all&genre=all&rating=0&order_by=latest';
 		let films 	= [];
 		let urls 	= [];
 
@@ -57,6 +57,7 @@ class Parsers extends parserTools {
 			let qFilmItem = async.queue(function (url, callback) {
 				needle.get(url, (err, res) => {
 					if (url === 'http://yify.is/movie/view') return callback() ;
+					// console.log(res.body);
 					let $ = cheerio.load(res.body);
 
 					let data = {
@@ -166,6 +167,8 @@ function parse (start, film, func, callback) {
 
 module.exports = function (start, film = '', callback) {
 	parse(start, film, 0, (films) => {
+		for (film in films)
+			if (films[film].id.length == 0) delete films[film];
 		callback(JSON.stringify(films))
 	});
 };
